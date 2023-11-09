@@ -27,13 +27,10 @@ public class BootstrapData implements CommandLineRunner {
 
 //      --- Instantiating new entities ---
 
+        // Changed string values to be consistent with the instructor's data
         Publisher publisher = new Publisher();
-        publisher.setPublisherName("name");
-        publisher.setAddress("address");
-        publisher.setState("state");
-        publisher.setCity("city");
-        publisher.setZip("zip");
-
+        publisher.setPublisherName("My Publisher");
+        publisher.setAddress("123 Main");
 
         Author eric = new Author();
         eric.setFirstName("Eric");
