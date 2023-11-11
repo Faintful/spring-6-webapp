@@ -13,7 +13,7 @@ public class Author {
     private String firstName;
     private String lastName;
 
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(mappedBy = "authors", targetEntity = Book.class)
 //  Instantiating this is necessary to avoid a null pointer exception on line 52 of BootstrapData
     private Set<Book> books = new HashSet<>();
 

@@ -12,6 +12,7 @@ public class Book {
     private Long id;
     private String title;
     private String isbn;
+
     @ManyToOne
     private Publisher publisher;
 
