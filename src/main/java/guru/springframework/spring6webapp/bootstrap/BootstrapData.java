@@ -27,7 +27,6 @@ public class BootstrapData implements CommandLineRunner {
 
 //      --- Instantiating new entities ---
 
-        // Changed string values to be consistent with the instructor's data
         Publisher publisher = new Publisher();
         publisher.setPublisherName("My Publisher");
         publisher.setAddress("123 Main");
@@ -50,7 +49,7 @@ public class BootstrapData implements CommandLineRunner {
 
 //      --- Persists the newly created instance to the database and saves the return value to a variable for further operations ---
 
-        publisherRepository.save(publisher); // Because the exercise does not ask for further operations, saving to a local variable is not necessary
+        Publisher publisherSaved = publisherRepository.save(publisher); // Saving the publisher this time because we will perform further operations on it
 
         Author ericSaved = authorRepository.save(eric);
         Book dddSaved = bookRepository.save(ddd);
@@ -58,12 +57,22 @@ public class BootstrapData implements CommandLineRunner {
         Author rodSaved = authorRepository.save(rod);
         Book noEJBSaved = bookRepository.save(noEJB);
 
+//      --- Makes the connection between Publisher and Book objects ---
+
+        dddSaved.setPublisher(publisherSaved);
+        noEJBSaved.setPublisher(publisherSaved);
+
+//      --- Persists changes to the database ---
+
+        bookRepository.save(dddSaved);
+        bookRepository.save(noEJBSaved);
+
 //      --- Makes the connection between Author and Book objects ---
 
         ericSaved.getBooks().add(dddSaved);
         rodSaved.getBooks().add(noEJBSaved);
 
-//      --- Saves again to persist changes to the database ---
+//      --- Persists changes to the database ---
 
         authorRepository.save(ericSaved);
         authorRepository.save(rodSaved);
