@@ -25,7 +25,7 @@ public class BootstrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-//      --- Instantiating new entities ---
+// --- Instantiating new entities ---
 
         Publisher publisher = new Publisher();
         publisher.setPublisherName("My Publisher");
@@ -47,49 +47,37 @@ public class BootstrapData implements CommandLineRunner {
         noEJB.setTitle("J2EE Development without EJB");
         noEJB.setIsbn("54757585");
 
-//      --- Persists the newly created instance to the database and saves the return value to a variable for further operations ---
+// --- Makes the connection between Publisher and Book objects ---
 
-        Publisher publisherSaved = publisherRepository.save(publisher); // Saving the publisher this time because we will perform further operations on it
+        ddd.setPublisher(publisher);
+        noEJB.setPublisher(publisher);
 
-        Author ericSaved = authorRepository.save(eric);
-        Book dddSaved = bookRepository.save(ddd);
+// --- Makes the connection between Author and Book objects ---
 
-        Author rodSaved = authorRepository.save(rod);
-        Book noEJBSaved = bookRepository.save(noEJB);
+        eric.getBooks().add(ddd);
+        rod.getBooks().add(noEJB);
 
-//      --- Makes the connection between Publisher and Book objects ---
+// --- Makes the connection between Book and Author objects ---
 
-        dddSaved.setPublisher(publisherSaved);
-        noEJBSaved.setPublisher(publisherSaved);
+        ddd.getAuthors().add(eric);
+        noEJB.getAuthors().add(rod);
 
-//      --- Persists changes to the database ---
+// --- Persists changes to the database ---
 
-        bookRepository.save(dddSaved);
-        bookRepository.save(noEJBSaved);
+        publisherRepository.save(publisher);
 
-//      --- Makes the connection between Author and Book objects ---
+        authorRepository.save(eric);
+        authorRepository.save(rod);
 
-        ericSaved.getBooks().add(dddSaved);
-        rodSaved.getBooks().add(noEJBSaved);
+        bookRepository.save(ddd);
+        bookRepository.save(noEJB);
 
-//      --- Makes the connection between Book and Author objects ---
-
-        dddSaved.getAuthors().add(ericSaved);
-        noEJBSaved.getAuthors().add(rodSaved);
-
-//      --- Persists changes to the database ---
-
-        authorRepository.save(ericSaved);
-        authorRepository.save(rodSaved);
-
-        bookRepository.save(dddSaved);
-        bookRepository.save(noEJBSaved);
-
-//      --- Logs the success of the database operations to the console ---
+// --- Logs the success of the database operations to the console ---
 
         System.out.println("In Bootstrap");
         System.out.println("Author Count: " + authorRepository.count());
         System.out.println("Book Count: " + bookRepository.count());
         System.out.println("Publisher Count: " + publisherRepository.count());
+
     }
 }

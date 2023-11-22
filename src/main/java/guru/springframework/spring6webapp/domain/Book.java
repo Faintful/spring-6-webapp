@@ -13,10 +13,10 @@ public class Book {
     private String title;
     private String isbn;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Publisher.class)
     private Publisher publisher;
 
-    @ManyToMany
+    @ManyToMany(targetEntity = Author.class)
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
 //  Instantiating this is necessary to avoid a null pointer exception on line 52 of BootstrapData
     private Set<Author> authors = new HashSet<>();
