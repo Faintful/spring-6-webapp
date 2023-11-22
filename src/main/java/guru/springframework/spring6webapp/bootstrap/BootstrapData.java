@@ -72,10 +72,18 @@ public class BootstrapData implements CommandLineRunner {
         ericSaved.getBooks().add(dddSaved);
         rodSaved.getBooks().add(noEJBSaved);
 
+//      --- Makes the connection between Book and Author objects ---
+
+        dddSaved.getAuthors().add(ericSaved);
+        noEJBSaved.getAuthors().add(rodSaved);
+
 //      --- Persists changes to the database ---
 
         authorRepository.save(ericSaved);
         authorRepository.save(rodSaved);
+
+        bookRepository.save(dddSaved);
+        bookRepository.save(noEJBSaved);
 
 //      --- Logs the success of the database operations to the console ---
 
